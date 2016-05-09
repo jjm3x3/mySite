@@ -3,10 +3,19 @@ var DefaltLayout = require('./layouts/default').default;
 
 var HelloMessage = React.createClass({
     render: function() {
+        var style = {
+            backgroundColor: '#990000'
+        }
         return (
-            <html>
-                <div> Hello {this.props.title} </div>
-            </html>
+            <body style={style}>
+            <div>
+                Hello {this.props.title},
+                <br/>
+                Welcome to the web site for Jacob J Meixner a Software engineer and computer enthusiast 
+
+
+            </div>
+            </body>
         )
     }
 });
