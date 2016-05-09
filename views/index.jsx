@@ -1,11 +1,13 @@
 var React = require('react');
+var DefaltLayout = require('./layouts/default').default;
 
 var HelloMessage = React.createClass({
     render: function() {
         return (
-            <DeaultLayout title= {this.props.title}>
+            <html>
                 <div> Hello {this.props.title} </div>
-            <DeaultLayout>
+            </html>
+        )
     }
 });
 

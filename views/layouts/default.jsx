@@ -1,6 +1,6 @@
 var React = require('react');
 
-var DefaltLayou = React.createClass({
+var DefaultLayout = React.createClass({
     render: function() {
         return (
             <html>
@@ -13,4 +13,4 @@ var DefaltLayou = React.createClass({
     }
 });
 
-module.exports = DefaltLayou
+module.exports = DefaultLayout
