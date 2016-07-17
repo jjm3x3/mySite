@@ -4,7 +4,10 @@ var DefaultLayout = React.createClass({
     render: function() {
         return (
             <html>
-            <head> <title>{this.props.title}</title></head>
+                <head>
+                    <title>{this.props.title}</title>
+                    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"></link>
+                </head>
             <body>
                 {this.props.children}
             </body>
@@ -13,4 +16,4 @@ var DefaultLayout = React.createClass({
     }
 });
 
-module.exports = DefaultLayout
+module.exports = DefaultLayout;
