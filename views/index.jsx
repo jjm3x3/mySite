@@ -17,8 +17,12 @@ var HelloMessage = React.createClass({
 
                     <h2>Blog</h2>
 		    {this.props.postList.map(function(post){
-                         return (<div>{post.map(function(para){
-                                 return <p>{para}</p>
+                         return (<div>{post.map(function(element){
+                                 if (element.type == "code") {
+                                     return <pre>{element.content}</pre>
+                                 } else {
+                                     return <p>{element.content}</p>
+                                 }
                              })}
                              <hr></hr>
                          </div>)
