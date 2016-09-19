@@ -20,6 +20,24 @@ var HelloMessage = React.createClass({
                          return (<div>{post.map(function(element){
                                  if (element.type == "code") {
                                      return <pre>{element.content}</pre>
+                                 } else if (element.type == "textWithLinks") {
+                                     var para = element.content;
+                                     var startOfA = para.indexOf("<a");
+                                     var startOfRef = para.indexOf("\"",startOfA + 1);
+                                     var endOfRef = para.indexOf("\"", startOfRef + 1);
+                                     var endOfA = para.indexOf("a>");
+                                     var ref = para.substring(startOfRef + 1, endOfRef);
+                                     var endOfBeginnigOfA = para.indexOf(">", startOfA + 1);
+                                     var beginningOfEndOfA = para.indexOf("<", endOfBeginnigOfA + 1);
+                                     var linkedText = para.substring(endOfBeginnigOfA + 1, beginningOfEndOfA);
+                                     var plainHtmlA = para.substring(startOfA,endOfA + 2)
+                                     var firstPart = para.substring(0, startOfA);
+                                     var lastPart = para.substring(endOfA + 2);
+                                     return <p>
+                                         {firstPart}
+                                         <a href={ref}>{linkedText}</a>
+                                         {lastPart}
+                                     </p>
                                  } else {
                                      return <p>{element.content}</p>
                                  }

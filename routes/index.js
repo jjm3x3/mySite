@@ -32,16 +32,21 @@ function formatBlogPost(dbpost) {
     blogPostElements = blogParas.map(function(para){
         if (para.includes("<code/>")) {
             para.replace("<code/>","");
-            return { content: dbpost.codeSnippits[nextSnip++], type: "code"}
+            code = dbpost.codeSnippits[nextSnip++]
+            return { content: code , type: "code"};
+        } else if (para.includes("<a")){
+
+            return {content:  para, type: "textWithLinks"};
+            
         } else {
-            console.log("this one is not");
+            // console.log("this one is not");
         }
 
         // console.log("here it is after the replace :\n" + para);
         return {content: para, type: "text"};
     });
 
-    console.log("after the replacement:\n" + blogPostElements);
+    // console.log("after the replacement:\n" + blogPostElements);
 
 
     blogPostElements.push({content: dbpost.name + " " + dbpost.date});
