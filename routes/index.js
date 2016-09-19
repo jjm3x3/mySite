@@ -14,7 +14,7 @@ var POSTDOC = 'post'
 router.get('/', function(req, res, next) {
     mongoClient.connect(URL, function(err, db) {
         var collection = db.collection('post');
-        collection.find({}).toArray(function(err,docs) {
+        collection.find({}).sort({date: -1}).toArray(function(err,docs) {
             postList = docs.map(function(blogPost){
                 // console.log(blogPost);
                 return formatBlogPost(blogPost);
@@ -49,7 +49,16 @@ function formatBlogPost(dbpost) {
     // console.log("after the replacement:\n" + blogPostElements);
 
 
-    blogPostElements.push({content: dbpost.name + " " + dbpost.date});
+    console.log("here is the date.length: " + dbpost.date.length);
+    console.log("here is the date: " + dbpost.date);
+    if (dbpost.date.lenght < 12) {
+        friendlyDate = dbpost.date
+    } else {
+        theDate = new Date(dbpost.date);
+        friendlyDate =  theDate.getMonth()+ "-" + theDate.getDate() + "-" + (1900 + theDate.getYear());
+        console.log("better date format?:" + friendlyDate);
+    }
+    blogPostElements.push({content: dbpost.name + " " + friendlyDate});
     return blogPostElements;
 }
 
