@@ -30,11 +30,11 @@ function formatBlogPost(dbpost) {
     blogParas = dbpost.postBody.split("\n");
     nextSnip = 0;
     blogPostElements = blogParas.map(function(para){
-        if (para.includes("<code/>")) {
+        if (para.indexOf("<code/>") == 0) {
             para.replace("<code/>","");
             code = dbpost.codeSnippits[nextSnip++]
             return { content: code , type: "code"};
-        } else if (para.includes("<a")){
+        } else if (para.indexOf("<a") == 0){
 
             return {content:  para, type: "textWithLinks"};
             
