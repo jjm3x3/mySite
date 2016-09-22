@@ -22,17 +22,29 @@ var HelloMessage = React.createClass({
                                      return <pre>{element.content}</pre>
                                  } else if (element.type == "textWithLinks") {
                                      var para = element.content;
-                                     var startOfA = para.indexOf("<a");
-                                     var startOfRef = para.indexOf("\"",startOfA + 1);
-                                     var endOfRef = para.indexOf("\"", startOfRef + 1);
-                                     var endOfA = para.indexOf("a>");
-                                     var ref = para.substring(startOfRef + 1, endOfRef);
-                                     var endOfBeginnigOfA = para.indexOf(">", startOfA + 1);
-                                     var beginningOfEndOfA = para.indexOf("<", endOfBeginnigOfA + 1);
-                                     var linkedText = para.substring(endOfBeginnigOfA + 1, beginningOfEndOfA);
-                                     var plainHtmlA = para.substring(startOfA,endOfA + 2)
-                                     var firstPart = para.substring(0, startOfA);
-                                     var lastPart = para.substring(endOfA + 2);
+                                     var linkIndicator = para.indexOf("](");
+                                     var endOfLink = para.indexOf(")",linkIndicator + 1);
+                                     var startOfLink = para.lastIndexOf("[", linkIndicator);
+                                     var firstPart = para.substring(0, startOfLink);
+                                     var lastPart = para.substring(endOfLink + 1);
+                                     var linkedText = para.substring(startOfLink + 1, linkIndicator);
+                                     var ref  = para.substring(linkIndicator + 2, endOfLink);
+
+                                     console.log("beinging: " + firstPart + "\n link Text: " + linkedText + "\nref: " + ref + "\nlastPart: " + lastPart);
+
+
+
+                                     /* var startOfA = para.indexOf("<a");
+                                      * var startOfRef = para.indexOf("\"",startOfA + 1);
+                                      * var endOfRef = para.indexOf("\"", startOfRef + 1);
+                                      * var endOfA = para.indexOf("a>");
+                                      * var ref = para.substring(startOfRef + 1, endOfRef);
+                                      * var endOfBeginnigOfA = para.indexOf(">", startOfA + 1);
+                                      * var beginningOfEndOfA = para.indexOf("<", endOfBeginnigOfA + 1);
+                                      * var linkedText = para.substring(endOfBeginnigOfA + 1, beginningOfEndOfA);
+                                      * var plainHtmlA = para.substring(startOfA,endOfA + 2)
+                                      * var firstPart = para.substring(0, startOfA);
+                                      * var lastPart = para.substring(endOfA + 2);*/
                                      return <p>
                                          {firstPart}
                                          <a href={ref}>{linkedText}</a>
