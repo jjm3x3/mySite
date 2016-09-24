@@ -55,7 +55,7 @@ function formatBlogPost(dbpost) {
         friendlyDate = dbpost.date
     } else {
         theDate = new Date(dbpost.date);
-        friendlyDate =  theDate.getMonth()+ "-" + theDate.getDate() + "-" + (1900 + theDate.getYear());
+        friendlyDate =  (theDate.getMonth() + 1) + "-" + (theDate.getDate() + 1) + "-" + (1900 + theDate.getYear());
         console.log("better date format?:" + friendlyDate);
     }
     blogPostElements.push({content: dbpost.name + " " + friendlyDate});
