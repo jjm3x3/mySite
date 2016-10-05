@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
                 // console.log(blogPost);
                 return formatBlogPost(blogPost);
             });
-            res.render('index', { title: 'Fellow Traveler', downloadURL: 'http://' + appDomain + '/downloads',
+            res.render('index', { title: 'Fellow Traveler', downloadUrl: 'http://' + appDomain + '/downloads',
                                   postList: postList});
         });
     })
