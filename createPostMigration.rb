@@ -1,11 +1,21 @@
 require 'date'
 
+def add_post_name_to_picture_path(full_post_name, mdImage)
+    startOfUrl = mdImage.index("(") + 1
+    originalUrl = mdImage[startOfUrl..mdImage.length-2]
+    post_name = full_post_name[full_post_name.rindex("/")..full_post_name.length]
+    post_short_name = post_name[0..post_name.index(".")-1]
+    newUrl = post_short_name + "/" + originalUrl
+    mdImage[0..mdImage.index("(")] + newUrl + ")"
+end
+
 if ARGV[0].nil?
   puts "you must provide a filename to generate a blogpost migration"
   exit
 end
 
-postContents = File.read(ARGV[0])
+postName = ARGV[0]
+postContents = File.read(postName)
 splitContents = postContents.split("\n")
 
 readingCode = false
@@ -26,7 +36,8 @@ splitContents.each do |para|
     # puts "read this code:\n#{para}\n"
     code += para + "\n"
   elsif para.include?("![")
-    postTextContent += para + "\\n"
+    newImageMd = add_post_name_to_picture_path(postName, para)
+    postTextContent += newImageMd + "\\n"
   elsif para != ""
     plainPara = para.strip 
     if plainPara.include? "]("
@@ -47,7 +58,6 @@ if ARGV[1].nil?
   date = DateTime.now.rfc3339
   puts "with out providing a data it will asume todays date () is this alright? (Y/n)"
   answer = STDIN.gets
-  puts "why no prompt?... or is there #{answer}"
   answer = answer.strip
   if !(answer == "" || answer == "y" || answer == "Y")
     exit
@@ -63,4 +73,5 @@ end
 migration = "db.post.insert({\"postBody\": \"#{postTextContent}\", \"codeSnippits\": #{codeSnippits},\"name\":\"Jacob Meixner\", \"date\": new Date(\"#{date}\")});"
 
 File.write("newPostMigration.js", migration)
+
 

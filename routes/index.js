@@ -38,7 +38,7 @@ function formatBlogPost(dbpost) {
             var linkIndicator = para.indexOf("](");
             var endOfLink = para.indexOf(")",linkIndicator + 1);
             var ref  = para.substring(linkIndicator + 2, endOfLink);
-            var url = "http://localhost:3000/pictures/" +  ref;
+            var url = "http://" + appDomain + "/pictures" +  ref;
 
             console.log("what is your value " + url);
             return {content: url, type: "Picture"};

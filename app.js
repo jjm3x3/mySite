@@ -41,13 +41,13 @@ app.use(function(req, res, next) {
 appDomain = "jacobmeixner.com"
 if (app.get('env') === 'development') {
     appDomain = "localhost:3000";
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
     });
-  });
 }
 console.log(appDomain);
 
