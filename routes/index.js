@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
     mongoClient.connect(URL, function(err, db) {
         var collection = db.collection('post');
         collection.find({}).sort({date: -1}).toArray(function(err,docs) {
-            postList = docs.map(function(blogPost){
+            var postList = docs.map(function(blogPost){
                 // console.log(blogPost);
                 return formatBlogPost(blogPost);
             });
@@ -32,10 +32,17 @@ function formatBlogPost(dbpost) {
     blogPostElements = blogParas.map(function(para){
         if (para.indexOf("<code/>") != -1) {
             para.replace("<code/>","");
-            code = dbpost.codeSnippits[nextSnip++]
+            var code = dbpost.codeSnippits[nextSnip++]
             return { content: code , type: "code"};
-        } else if (para.indexOf("](") != -1){
+        }else if (para.indexOf("![") != -1) {
+            var linkIndicator = para.indexOf("](");
+            var endOfLink = para.indexOf(")",linkIndicator + 1);
+            var ref  = para.substring(linkIndicator + 2, endOfLink);
+            var url = "http://localhost:3000/pictures/" +  ref;
 
+            console.log("what is your value " + url);
+            return {content: url, type: "Picture"};
+        } else if (para.indexOf("](") != -1){
             return {content: para, type: "textWithLinks"};
             
         } else {
@@ -52,10 +59,10 @@ function formatBlogPost(dbpost) {
     console.log("here is the date.length: " + dbpost.date.length);
     console.log("here is the date: " + dbpost.date);
     if (dbpost.date.lenght < 12) {
-        friendlyDate = dbpost.date
+        var friendlyDate = dbpost.date
     } else {
-        theDate = new Date(dbpost.date);
-        friendlyDate =  (theDate.getMonth() + 1) + "-" + (theDate.getDate() + 1) + "-" + (1900 + theDate.getYear());
+        var theDate = new Date(dbpost.date);
+        var friendlyDate =  (theDate.getMonth() + 1) + "-" + (theDate.getDate() + 1) + "-" + (1900 + theDate.getYear());
         console.log("better date format?:" + friendlyDate);
     }
     blogPostElements.push({content: dbpost.name + " " + friendlyDate});

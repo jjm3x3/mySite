@@ -35,6 +35,8 @@ var HelloMessage = React.createClass({
                                          <a href={ref}>{linkedText}</a>
                                          {lastPart}
                                      </p>
+                                 }else if (element.type == "Picture") {
+                                     return <image src={element.content}></image>
                                  } else {
                                      return <p>{element.content}</p>
                                  }

@@ -25,6 +25,8 @@ splitContents.each do |para|
   elsif readingCode
     # puts "read this code:\n#{para}\n"
     code += para + "\n"
+  elsif para.include?("![")
+    postTextContent += para + "\\n"
   elsif para != ""
     plainPara = para.strip 
     if plainPara.include? "]("
@@ -42,11 +44,20 @@ postTextContent = postTextContent.gsub("\"","\\\"")
 
 
 if ARGV[1].nil?
-  puts "with out providing a data it will asume todays date () is this alright? (Y/n)"
-  exit
   date = DateTime.now.rfc3339
+  puts "with out providing a data it will asume todays date () is this alright? (Y/n)"
+  answer = STDIN.gets
+  puts "why no prompt?... or is there #{answer}"
+  answer = answer.strip
+  if !(answer == "" || answer == "y" || answer == "Y")
+    exit
+  end
 else
   date = ARGV[1].split("-")
+  if date.count < 3
+    puts "date must be '-' delimited or else..." 
+    exit
+  end
   date =  DateTime.new(date[2].to_i, date[0].to_i, date[1].to_i).rfc3339
 end
 migration = "db.post.insert({\"postBody\": \"#{postTextContent}\", \"codeSnippits\": #{codeSnippits},\"name\":\"Jacob Meixner\", \"date\": new Date(\"#{date}\")});"
