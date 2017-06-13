@@ -13,6 +13,11 @@ var POSTDOC = 'post'
 /* GET home page. */
 router.get('/', function(req, res, next) {
     mongoClient.connect(URL, function(err, db) {
+	if (err != null) {
+		console.log("Error connecting to db: ", err);
+		res.status(500).json({"error":"the server has encountered an error"});
+		return;
+	}
         var collection = db.collection('post');
         collection.find({}).sort({date: -1}).toArray(function(err,docs) {
             postList = docs.map(function(blogPost){
