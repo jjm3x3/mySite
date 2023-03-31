@@ -1,9 +1,9 @@
 # mySite
-This is a repo for my psersonal website
+This is a repo for my personal site.
 
-## Instalation
-As with any normal node app first step is
-* `npm i`
-* `npm start`
+## Installation
+As with any normal Node.js application, follow the steps:
+-1 `npm i`
+-1 `npm start`
 
-During setup add /public/files/jacobjmeixner2016resume.doc
+During setup, add /public/files/jacobjmeixner2016resume.doc
